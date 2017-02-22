@@ -2,8 +2,7 @@
 //
 
 #include "stdafx.h"
-//#include "Graph.h"
-#include "Header.h"
+#include "Graph.h"
 #include <string>
 #include <locale.h>
 #include <iostream>
@@ -13,7 +12,7 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 
-	char *filein = "graph.txt", *fileout = "list.txt";
+	char *filein = "graph.txt", *fifoOut = "FIFO.txt", *lifoOut = "LIFO.txt";
 	Graph grah;
 	grah.list = (list*)calloc(5, sizeof(list));
 
@@ -30,13 +29,21 @@ int main()
 	}
 	else cout << "File doesn't exist";
 	source.close();
-	dest.open(fileout, ios::app);
+	/*
+	dest.open(fifoOut, ios::trunc);
 	if (dest)
 	{
-		//dest << grah;
+		dest << grah;
 	}
 	dest.close();
-
+	*/
+	dest.open(lifoOut, ios::trunc);
+	if (dest)
+	{
+		dest << grah;
+	}
+	dest.close();
+	
 	getchar();
 	return 0;
 }

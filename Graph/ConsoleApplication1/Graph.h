@@ -14,29 +14,30 @@ struct Node
 };
 typedef Node *list;
 /*
-void printList(list p)
+void printFileList(list p)
 {
 	while (p)
 	{
-		printf("%d ", p->key);
+		stream;
 		p = p->next;
 	}
 	printf("\n");
-}
-*/
-void insertLastNode(list p, int ves, int id)///complete
+}*/
+/*completly works*/
+//insert new node in the end of list
+void insertLastNode(list p, int ves, int id)
 {
 	list q = new Node;
 	list x = p;
 	q->id = id;
 	q->ves = ves;
+	q->next = NULL;
 	while (x->next != NULL)
 		x = x->next;
-	/*ХЗ КАКОЙ ВАРИАНТ БУДЕТ РАБОТАТЬ*/
-	//findItem(p, x->id)->next=q;
-	//x->next = q;
+	x->next = q;
 }
-
+/*completly works*/
+//insert new node in the top of list
 void insertFirstNode(list p, int ves, int id)
 {
 	list q = new Node;
@@ -139,16 +140,17 @@ ifstream &operator >> (ifstream &stream, Graph &graph)
 	if (!graph.list[i])
 	{
 		stream >> countNode;
-		//graph.list = new list[countNode];
 		graph.list = (list*)realloc(graph.list, countNode * sizeof(list));
 		for (int j = 0; j < countNode; j++)
 			graph.list[j] = new Node;
-
+		graph.list[countNode] = NULL;
 		stream >> id;
 		stream >> nextNode;
 		stream >> ves;
 		graph.list[i]->id = id;
-		insertFirstNode(graph.list[i], ves, nextNode);
+		graph.list[i]->next = NULL;
+		//insertFirstNode(graph.list[i], ves, nextNode);
+		insertLastNode(graph.list[i], ves, nextNode);
 	}
 	else
 	{
@@ -157,13 +159,32 @@ ifstream &operator >> (ifstream &stream, Graph &graph)
 		stream >> ves;
 		if (id == graph.list[i]->id)
 		{
-			insertFirstNode(graph.list[i], ves, nextNode);
+			//insertFirstNode(graph.list[i], ves, nextNode);
+			insertLastNode(graph.list[i], ves, nextNode);
 		}
 		else {
 			i++;
 			graph.list[i]->id = id;
-			insertFirstNode(graph.list[i], ves, nextNode);
+			graph.list[i]->next = NULL;
+			//insertFirstNode(graph.list[i], ves, nextNode);
+			insertLastNode(graph.list[i], ves, nextNode);
 		}
+	}
+	return stream;
+}
+ofstream &operator <<(ofstream &stream, Graph graph)
+{	
+	int i=0;
+	while (graph.list[i])
+	{
+		stream << "[" << graph.list[i]->id << "]->";
+		while (graph.list[i]->next!=NULL) 
+		{
+			graph.list[i] = graph.list[i]->next;
+			stream << "[" << graph.list[i]->id << "/" << graph.list[i]->ves << "]" << "->";
+		}
+		stream << endl;
+		i++;
 	}
 	return stream;
 }
