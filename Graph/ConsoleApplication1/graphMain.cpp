@@ -37,13 +37,14 @@ int main()
 	}
 	dest.close();
 	*/
+
 	dest.open(lifoOut, ios::trunc);
 	if (dest)
 	{
 		dest << grah;
 	}
 	dest.close();
-	
+	freeGraph(grah);
 	getchar();
 	return 0;
 }

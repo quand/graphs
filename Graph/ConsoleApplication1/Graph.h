@@ -13,16 +13,14 @@ struct Node
 	int ves;
 };
 typedef Node *list;
-/*
-void printFileList(list p)
+
+struct Graph
 {
-	while (p)
-	{
-		stream;
-		p = p->next;
-	}
-	printf("\n");
-}*/
+	list *list;
+};
+
+
+
 /*completly works*/
 //insert new node in the end of list
 void insertLastNode(list p, int ves, int id)
@@ -61,16 +59,15 @@ list findItem(list p, int id)
 	else return 0;
 }
 
-void deletAfter(list p)
+void deleteLast(list p)
 {
-	if (p->next != NULL)
-	{
-		list q = p->next;
-		p->next = q->next;
-		delete q;
-	}
+	list q,x = p;
+	while (x->next->next != NULL && x->next != NULL)
+		x = x->next;
+	q = x->next;
+	x->next = NULL;
+	delete q;
 }
-
 void freeList(list p)
 {
 	list q;
@@ -80,7 +77,17 @@ void freeList(list p)
 		p = p->next;
 		delete q;
 	}
-}/*
+}
+void freeGraph(Graph graph) 
+{
+	int i=0;
+	while (graph.list[i]) 
+	{
+		freeList(graph.list[i]);
+		i++;
+	}
+}
+/*
 list deletByKey(int k, list p)
 {
 	/*do
@@ -128,10 +135,6 @@ list deletByKey(int k, list p)
 }*/
 //////////////////////////////////////////////////////////////////////////
 
-struct Graph
-{
-	list *list;
-};
 ifstream &operator >> (ifstream &stream, Graph &graph)
 {
 	int countNode = 0, id, nextNode, ves;
