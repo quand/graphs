@@ -1,12 +1,8 @@
-// ConsoleApplication1.cpp: определяет точку входа для консольного приложения.
-//
-
 #include "stdafx.h"
 #include "Graph.h"
 #include <string>
 #include <locale.h>
 #include <iostream>
-
 
 int main()
 {
@@ -37,7 +33,6 @@ int main()
 	}
 	dest.close();
 	*/
-
 	dest.open(lifoOut, ios::trunc);
 	if (dest)
 	{

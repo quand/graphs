@@ -19,9 +19,6 @@ struct Graph
 	list *list;
 };
 
-
-
-/*completly works*/
 //insert new node in the end of list
 void insertLastNode(list p, int ves, int id)
 {
@@ -45,6 +42,29 @@ void insertFirstNode(list p, int ves, int id)
 	p->next = q;
 }
 
+int top(list stack)
+{
+	int id;
+	list x=stack;
+	while (x&&x->next!=NULL) 
+	{
+		x=x->next;
+	}
+	return x->id;
+}
+
+int down(list stack)
+{
+	if (stack&&stack->next != NULL)
+		return stack->next->id;
+	else
+		return stack->id;
+}
+
+int next(list stack)
+{
+
+}
 
 list findItem(list p, int id)
 {
@@ -87,54 +107,36 @@ void freeGraph(Graph graph)
 		i++;
 	}
 }
-/*
-list deletByKey(int k, list p)
+
+list depthFirstSearch(Graph graph,int id) 
 {
-	/*do
+	int i=0,t,P;
+	bool* now;
+	list stack = new Node,x;
+	stack->id=id;
+	stack->next = NULL;
+	while (graph.list[i])
 	{
-	list temp = p;
-
-	if (p&&p->key != k)
-	{
-	while (temp->next->key != k)
-	{
-	temp = temp->next;
+		i++;
 	}
-
-	deletAfter(temp);
-
-	return p;
-	}
-	else if (p)
+	now = (bool*)calloc(i + 1, sizeof(bool));
+	now[id] = false;
+	while (stack)
 	{
-	temp = p->next;
-	delete p;
-	p=temp;
-	if (!findItem(p, k))return p;
+		t = top(stack);
+		P = top(graph.list[t]);
+		while (P != down(graph.list[t]) && !now[P])
+		{
+			P = (graph.list[t]);
+		}
 	}
+	
 
-	} while (findItem(p, k));
-	////////////////////////////////////////////////////////////////////////
+	return stack;
+}
 
-	list temp = p;
 
-	while (temp&&temp->next)
-	{
-		if (temp->next->key == k)
-			deletAfter(temp);
-		else temp = temp->next;
-	}
-
-	if (p->key == k)
-	{
-		temp = p->next;
-		delete p;
-	}
-
-	return temp;
-}*/
 //////////////////////////////////////////////////////////////////////////
-
 ifstream &operator >> (ifstream &stream, Graph &graph)
 {
 	int countNode = 0, id, nextNode, ves;
